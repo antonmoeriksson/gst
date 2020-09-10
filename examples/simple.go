@@ -18,8 +18,8 @@ func checkElem(e *gst.Element, name string) {
 func main() {
 	src := gst.ElementFactoryMake("videotestsrc", "VideoSrc")
 	checkElem(src, "videotestsrc")
-	//vsink := "autovideosink"
-	vsink := "xvimagesink"
+	vsink := "autovideosink"
+	// vsink := "xvimagesink"
 	sink := gst.ElementFactoryMake(vsink, "VideoSink")
 	checkElem(sink, vsink)
 

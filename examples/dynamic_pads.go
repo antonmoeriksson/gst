@@ -23,9 +23,10 @@ func main() {
 	src.SetProperty("do-timestamp", true)
 	src.SetProperty("pattern", 18) // ball
 
-	encType := "mpeg2enc"
-	//encType := "x264enc"
-	enc := gst.ElementFactoryMake(encType, "Video encoder")
+	// encType := "mpeg2enc"
+	// encType := "x264enc"
+	encType := "vp8enc"
+	enc := gst.ElementFactoryMake(encType, "Videoencoder")
 	checkElem(enc, encType)
 
 	//muxType := "webmux"
@@ -37,8 +38,9 @@ func main() {
 	demux := gst.ElementFactoryMake("matroskademux", "Matroska demuxer")
 	checkElem(demux, "matroskademux")
 
-	decType := "mpeg2dec"
-	//decType := "avdec_h264"
+	// decType := "mpeg2dec"
+	// decType := "avdec_h264"
+	decType := "vp8dec"
 	dec := gst.ElementFactoryMake(decType, "Video decoder")
 	checkElem(dec, decType)
 
