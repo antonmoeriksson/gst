@@ -12,8 +12,8 @@ import (
 	"net/http"
 	"syscall"
 
-	"github.com/lijo-jose/glib"
-	"github.com/lijo-jose/gst"
+	"github.com/antonmoeriksson/glib"
+	"github.com/antonmoeriksson/gst"
 )
 
 type Index struct {

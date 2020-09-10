@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/antonmoeriksson/gst"
-	"github.com/antonmoeriksson/glib"
+	"github.com/lijo-jose/glib"
+	"github.com/lijo-jose/gst"
 )
 
 func checkElem(e *gst.Element, name string) {
@@ -25,7 +25,8 @@ func main() {
 
 	fmt.Println("Hej")
 	//encType := "mpeg2enc"
-	encType := "x264enc"
+	// encType := "x264enc"
+	encType := "vp8enc"
 	enc := gst.ElementFactoryMake(encType, "Video encoder")
 	checkElem(enc, encType)
 	fmt.Println("Hej")
@@ -40,7 +41,8 @@ func main() {
 	checkElem(demux, "matroskademux")
 
 	//decType := "mpeg2dec"
-	decType := "avdec_h264"
+	//decType := "avdec_h264"
+	decType := "vp8dec"
 	dec := gst.ElementFactoryMake(decType, "Video decoder")
 	checkElem(dec, decType)
 
@@ -52,8 +54,14 @@ func main() {
 	pl.Add(src, enc, mux, demux, dec, sink)
 
 	src.Link(enc, mux, demux)
+	fmt.Println("Nice1" )
+
 	demux.ConnectNoi("pad-added", cbPadAddedNew, dec.GetStaticPad("sink"))
+	fmt.Println("Nice 22" )
+
 	dec.Link(sink)
+	fmt.Println("Nice 333" )
+
 	pl.SetState(gst.STATE_PLAYING)
 
 	glib.NewMainLoop(nil).Run()
