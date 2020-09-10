@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/danielpaulus/gst"
-	"github.com/lijo-jose/glib"
+	"github.com/antonmoeriksson/gst"
+	"github.com/antonmoeriksson/glib"
 )
 
 func checkElem(e *gst.Element, name string) {
@@ -23,10 +23,12 @@ func main() {
 	src.SetProperty("do-timestamp", true)
 	src.SetProperty("pattern", 18) // ball
 
-	encType := "mpeg2enc"
-	//encType := "x264enc"
+	fmt.Println("Hej")
+	//encType := "mpeg2enc"
+	encType := "x264enc"
 	enc := gst.ElementFactoryMake(encType, "Video encoder")
 	checkElem(enc, encType)
+	fmt.Println("Hej")
 
 	//muxType := "webmux"
 	muxType := "matroskamux"
@@ -37,8 +39,8 @@ func main() {
 	demux := gst.ElementFactoryMake("matroskademux", "Matroska demuxer")
 	checkElem(demux, "matroskademux")
 
-	decType := "mpeg2dec"
-	//decType := "avdec_h264"
+	//decType := "mpeg2dec"
+	decType := "avdec_h264"
 	dec := gst.ElementFactoryMake(decType, "Video decoder")
 	checkElem(dec, decType)
 
@@ -50,7 +52,7 @@ func main() {
 	pl.Add(src, enc, mux, demux, dec, sink)
 
 	src.Link(enc, mux, demux)
-	demux.ConnectNoi("pad-added", cbPadAdded, dec.GetStaticPad("sink"))
+	demux.ConnectNoi("pad-added", cbPadAddedNew, dec.GetStaticPad("sink"))
 	dec.Link(sink)
 	pl.SetState(gst.STATE_PLAYING)
 
@@ -58,7 +60,7 @@ func main() {
 }
 
 // Callback function for "pad-added" event
-func cbPadAdded(dec_sink_pad, demux_new_pad *gst.Pad) {
+func cbPadAddedNew(dec_sink_pad, demux_new_pad *gst.Pad) {
 	fmt.Println("New pad:", demux_new_pad.GetName())
 	if demux_new_pad.CanLink(dec_sink_pad) {
 		if demux_new_pad.Link(dec_sink_pad) != gst.PAD_LINK_OK {

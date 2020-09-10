@@ -125,7 +125,7 @@ func (p PadProbeType) g() C.GstPadProbeType {
 }
 
 func (p *PadProbeType) String() string {
-	switch p {
+	switch *p {
 	case PAD_PROBE_TYPE_INVALID:
 		return "PAD_PROBE_TYPE_INVALID"
 	case PAD_PROBE_TYPE_IDLE:
@@ -140,7 +140,7 @@ func (p *PadProbeType) String() string {
 	case PAD_PROBE_TYPE_EVENT_DOWNSTREAM:
 		return "PAD_PROBE_TYPE_EVENT_DOWNSTREAM"
 	case PAD_PROBE_TYPE_EVENT_UPSTREAM:
-		return "PAD_PROBE_TYPE_BLOCK"
+		return "PAD_PROBE_TYPE_EVENT_UPSTREAM"
 	case PAD_PROBE_TYPE_EVENT_FLUSH:
 		return "PAD_PROBE_TYPE_EVENT_FLUSH"
 
@@ -158,8 +158,8 @@ func (p *PadProbeType) String() string {
 		return "PAD_PROBE_TYPE_BLOCKING"
 	case PAD_PROBE_TYPE_DATA_DOWNSTREAM:
 		return "PAD_PROBE_TYPE_DATA_DOWNSTREAM"
-	case PAD_PROBE_TYPE_DATA_UPSTREAM:
-		return "PAD_PROBE_TYPE_DATA_UPSTREAM"
+		//	case PAD_PROBE_TYPE_DATA_UPSTREAM:
+		//		return "PAD_PROBE_TYPE_DATA_UPSTREAM"
 	case PAD_PROBE_TYPE_DATA_BOTH:
 		return "PAD_PROBE_TYPE_DATA_BOTH"
 	case PAD_PROBE_TYPE_BLOCK_DOWNSTREAM:
@@ -184,7 +184,9 @@ gulong gst_pad_add_probe(GstPad *pad, GstPadProbeType mask, GstPadProbeCallback 
 
 */
 func (p *Pad) PadAddProbe(pad *Pad) C.gulong {
-	return C.gst_pad_add_probe()
+	// TODO: imp
+	return C.gulong(0)
+	//return C.gst_pad_add_probe()
 }
 
 type GhostPad struct {
